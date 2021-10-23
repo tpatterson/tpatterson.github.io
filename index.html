@@ -1,0 +1,40 @@
+<html>
+<head><title>Wave!!!</title></head>
+<body>
+<div style="padding: 1em;">
+    Message: <input type="text" id="message" value="Test Message" />
+    <button>Go!</button>
+</div>
+<canvas id="canvas" width="800px" height="400px" style="border:1px solid #000000;"></canvas>
+
+<br>
+Log:<br>
+<textarea id="log" rows="10" cols="80"></textarea>
+</body>
+
+<script>
+
+
+    function log(text){
+        document.getElementById("log").innerHTML += "\n" + text;
+    }
+    log(window.DeviceMotionEvent);
+
+    if ( typeof( DeviceMotionEvent ) !== "undefined" && typeof( DeviceMotionEvent.requestPermission ) === "function" ) {
+        DeviceMotionEvent.requestPermission()
+            .then( response => {
+            if ( response == "granted" ) {
+                window.addEventListener( "devicemotion", (event) => {
+                    log(event.acceleration.x + ' m/s2');
+                })
+            }
+        }).catch( console.error )
+    } else {
+        log( "DeviceMotionEvent is not defined" );
+    }
+
+
+    log("Done");
+</script>
+
+</html>
